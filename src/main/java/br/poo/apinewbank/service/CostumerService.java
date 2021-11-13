@@ -48,14 +48,14 @@ public class CostumerService {
        List<UserDTO> result = new ArrayList<>();
 
 
-       for(UserEntity u : repository.getUsers()){
+       /*for(UserEntity u : repository.getUsers()){
 
            UserDTO aux = new UserDTO();
            aux.setName(u.getName());
            aux.setAccountNumber(u.getAccountNumber());
            aux.setCpf(u.getCpf());
            result.add(aux);
-       }
+       }*/
        return result;
 
    }

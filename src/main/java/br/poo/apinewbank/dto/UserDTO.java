@@ -2,11 +2,20 @@ package br.poo.apinewbank.dto;
 
 public class UserDTO {
 
+    private Long id;
     private String name;
     private String accountNumber;
     private String cpf;
     private String password;
 
+    public UserDTO(Long id, String name, String accountNumber, String cpf, String password){
+        this.id = id;
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.cpf = cpf;
+        this.password = password;
+
+    }
     public String getName() {
         return name;
     }

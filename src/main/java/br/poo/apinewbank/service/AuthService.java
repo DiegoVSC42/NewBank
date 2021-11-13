@@ -2,20 +2,21 @@ package br.poo.apinewbank.service;
 
 import br.poo.apinewbank.dto.UserDTO;
 import br.poo.apinewbank.entity.UserEntity;
+import br.poo.apinewbank.repository.AuthRepository;
 import br.poo.apinewbank.repository.CostumerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Scope("singleton") // So exite uma instancia dessa classe
 public class AuthService {
 
+    @Autowired
+    private AuthRepository repo;
     // Numero de digitos da conta pode ter até 8 digitos
     private final int MAX_ACCOUNT_NUMBER = (int)Math.pow(10, 8);
     Random rand = new Random();
@@ -33,7 +34,22 @@ public class AuthService {
         }
         return null;
     }
+    public List<UserDTO> getUsers(String name) {
+        String filter = name != null ? name : "";
+        Optional<List<UserEntity>> result = repo.findByNameContaining(filter);
 
+        List<UserDTO> lst = new ArrayList<>();
+
+        if (result.isPresent()) {
+            List<UserEntity> users = result.get();
+            for (UserEntity u : users) {
+                UserDTO dto = new UserDTO(u.getId(), u.getName(), u.getAccountNumber(),u.getCpf(), u.getPassword());
+                lst.add(dto);
+            }
+        }
+
+        return lst;
+    }
 
     private String convertIntToAccountNumber(int accountNumber) {
         int account = accountNumber/10; // Primeiros digitos
@@ -149,11 +165,11 @@ public class AuthService {
         entity.setPassword(user.getPassword());
         String token = UUID.randomUUID().toString();
         entity.setToken(token);
-        repository.addUser(entity); //NA VERSAO FINAL DO PROJETO DEVE GRAVAR NO BANCO DE DADOS
-        // DENTRO DA REPOSITORY
+
 
         user.setAccountNumber(entity.getAccountNumber());
-
+        repo.save(entity); //NA VERSAO FINAL DO PROJETO DEVE GRAVAR NO BANCO DE DADOS
+        // DENTRO DA REPOSITORY
         return 0;
     }
 

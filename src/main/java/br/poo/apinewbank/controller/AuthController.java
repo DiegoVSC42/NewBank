@@ -3,11 +3,11 @@ package br.poo.apinewbank.controller;
 import br.poo.apinewbank.dto.UserDTO;
 import br.poo.apinewbank.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 @RestController
 public class AuthController {
@@ -29,6 +29,15 @@ public class AuthController {
 
         return ResponseEntity.ok().headers(responseHeader).build();
     }
+
+   /* @GetMapping("/users")
+    public ResponseEntity<List<UserDTO>> getUsers(@RequestParam(required = false) String name) {
+        List<UserDTO> lst = service.getUsers(name);
+        if (lst.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(lst);
+    }*/
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody UserDTO user) {
@@ -55,5 +64,12 @@ public class AuthController {
         //return ResponseEntity.ok().build();
         return ResponseEntity.ok(s);
     }
-
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDTO>> getUsers(@RequestParam(required = false) String name) {
+        List<UserDTO> lst = service.getUsers(name);
+        if (lst.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(lst);
+    }
 }
