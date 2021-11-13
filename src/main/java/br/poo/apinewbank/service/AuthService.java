@@ -59,23 +59,87 @@ public class AuthService {
 
     public boolean isValidCPF(String CPF) {
         return CPF.length() == 11 && CPF.matches("[0-9]+");
-    }
 
+    }
+    public boolean isValidPassword(String password) {
+
+        char teste[] = password.toCharArray();
+
+        for(int i = 0; i < password.length();i++){
+            if(Character.isUpperCase(teste[i])){
+                return true;
+            }
+        }
+        return false;
+    }
+    public int cpfVerificator(String cpf){
+        char[] cpfConv = cpf.toCharArray();
+        int vefEquals = 0;
+        int contador = 0;
+        for(int i = 0; i < 10;i++){
+            if(cpfConv[i] == cpfConv[i+1]){
+                vefEquals++;
+            }
+        }
+        if(vefEquals == 10){
+            return 0;
+        }else {
+            int j = 10;
+            for (int i = 0; i < 9; i++) {
+                int num = Character.getNumericValue(cpfConv[i]);
+                num = num * j;
+                contador = contador + num;
+                j--;
+            }
+            int resto1 = (contador * 10) % 11;
+            if (resto1 != Character.getNumericValue(cpfConv[9])) {
+                return 0;
+            }else {
+                int k = 11;
+                contador = 0;
+                for (int i = 0; i < 10; i++) {
+                    int num = Character.getNumericValue(cpfConv[i]);
+                    num = num * k;
+                    contador = contador + num;
+                    k--;
+                }
+                int resto2 = (contador * 10) % 11;
+                if (resto2 != Character.getNumericValue(cpfConv[10])) {
+                    return 0;
+
+                } else {
+                    return 1;
+                }
+            }
+        }
+    }
     public int signup(UserDTO user) {
 
         // Regra 1: Validar o nome do usuario: Precisa ter pelo menos duas palavras
-        if (user.getName().trim().equals("") || user.getName().trim().split(" ").length < 2) {
+        if (user.getName().trim().equals("") ) {
             return 1;
+        }
+        if(user.getName().trim().split(" ").length < 2){
+            return 2;
         }
 
         // Regra 2: Validar o CPF
         if (!isValidCPF(user.getCpf().trim())) {
-            return 2;
-        }
-        // Regra 3: Validar a senha: Minimo 6 caracteres (No trabalho fazer mais firula)
-        if (user.getPassword().length() < 6) {
+
             return 3;
         }
+        if(cpfVerificator(user.getCpf()) != 1){
+            System.out.println("O valor é: " + cpfVerificator(user.getCpf()));
+            return 4;
+        }
+        // Regra 3: Validar a senha: Minimo 14 caracteres
+        if (user.getPassword().length() < 14) {
+            return 5;
+        }
+        if(!isValidPassword(user.getPassword().trim())){
+            return 6;
+        }
+
 
         UserEntity entity = new UserEntity();
 
