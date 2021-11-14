@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface AuthRepository extends CrudRepository<UserEntity, Long> {
 
     Optional<List<UserEntity>> findByNameContaining(String name);
+
 }

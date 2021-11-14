@@ -26,7 +26,6 @@ public class AuthController {
 
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.add("Authorization", token);
-
         return ResponseEntity.ok().headers(responseHeader).build();
     }
 
@@ -37,6 +36,18 @@ public class AuthController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(lst);
+    }
+
+
+    @DeleteMapping("/users")
+    public ResponseEntity<String> deleteUsers(@RequestParam long id) {
+
+        int result = service.deleteUsers(id);
+        if(result == 0){
+            ResponseEntity.badRequest().body("ID inexistente");
+        }
+        String s = "Usuario deletado com sucesso";
+        return ResponseEntity.ok(s);
     }
 
     @PostMapping("/signup")

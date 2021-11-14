@@ -3,12 +3,10 @@ package br.poo.apinewbank.service;
 import br.poo.apinewbank.dto.UserDTO;
 import br.poo.apinewbank.entity.UserEntity;
 import br.poo.apinewbank.repository.AuthRepository;
-import br.poo.apinewbank.repository.CostumerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -32,8 +30,6 @@ public class AuthService {
         return null;
     }
     public int signup(UserDTO user) {
-
-
 
         // Explicacao das regras estao na AuthController
         if (user.getName().trim().equals("") || user.getName().trim().split(" ").length < 2) {
@@ -79,6 +75,17 @@ public class AuthService {
 
         return lst;
     }
+    public int deleteUsers(long id) {
+        Optional <UserEntity> result = repo.findById(id);
+
+        if (result.isPresent()) {
+            repo.deleteById(id);
+            return 1;
+        }
+        return 0;
+    }
+
+
 
 
 
