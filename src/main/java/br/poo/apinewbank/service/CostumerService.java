@@ -2,8 +2,8 @@ package br.poo.apinewbank.service;
 
 import br.poo.apinewbank.dto.CostumerDTO;
 import br.poo.apinewbank.dto.UserDTO;
+import br.poo.apinewbank.entity.CostumerBuilder;
 import br.poo.apinewbank.entity.CostumerEntity;
-import br.poo.apinewbank.entity.UserEntity;
 import br.poo.apinewbank.repository.CostumerRepository;
 
 import java.time.format.DateTimeFormatter;
@@ -64,13 +64,27 @@ public class CostumerService {
         if (newCostumer.getName().trim().equals("") || newCostumer.getName().trim().split(" ").length < 2) {
             return 1;
         }
+        CostumerBuilder builder = CostumerBuilder.getSingleton();
 
-        CostumerEntity entity = new CostumerEntity();
+        CostumerEntity entity = builder
+            .withName(newCostumer.getName())
+            .withAccountNumber(newCostumer.getAccountNumber())
+            .withCpf(newCostumer.getCpf())
+            .withBalance(newCostumer.getBalance())
+            .build();
+
+
+        /*stumerEntity entity = new CostumerEntity(
+                newCostumer.getName(),
+                newCostumer.getAccountNumber(),
+                newCostumer.getCpf(),
+                newCostumer.getBalance());
 
         entity.setName(newCostumer.getName());
         entity.setAccountNumber(newCostumer.getAccountNumber());
-        entity.setBalance(newCostumer.getBalance());
         entity.setCpf(newCostumer.getCpf());
+        entity.setBalance(newCostumer.getBalance());*/
+
         users.add(entity);
 
         return 0;

@@ -24,7 +24,18 @@ public class UserEntity {
 
     @Column(name = "token", nullable = true)
     private String token;
+    public UserEntity(
+                    String name,
+                    String accountNumber,
+                    String cpf,
+                    String password){
 
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.cpf = cpf;
+        this.password = password;
+
+    }
     public Long getId() {
         return id;
     }

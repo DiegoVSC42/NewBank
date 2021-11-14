@@ -45,16 +45,20 @@ public class AuthService {
         }
 
 
-        UserEntity entity = new UserEntity();
+        UserEntity entity = new UserEntity(
+                user.getName(),
+                user.getAccountNumber(),
+                user.getCpf(),
+                user.getPassword());
 
-        entity.setName(user.getName());
-        entity.setAccountNumber(Validator.generateAccountNumber());
+        /*entity.setName(user.getName());
+
         entity.setCpf(user.getCpf());
-        entity.setPassword(user.getPassword());
+        entity.setPassword(user.getPassword());*/
         String token = UUID.randomUUID().toString();
         entity.setToken(token);
 
-
+        entity.setAccountNumber(Validator.generateAccountNumber());
         user.setAccountNumber(entity.getAccountNumber());
         repo.save(entity);
         return 0;

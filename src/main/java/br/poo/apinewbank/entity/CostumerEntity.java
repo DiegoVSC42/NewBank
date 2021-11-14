@@ -1,6 +1,9 @@
 package br.poo.apinewbank.entity;
 
 
+import java.util.Date;
+import java.util.List;
+
 public class CostumerEntity {
 
     private long id;
@@ -15,6 +18,20 @@ public class CostumerEntity {
             return 0;
         }
         return -1;
+    }
+    public CostumerEntity(){
+
+    }
+    public CostumerEntity(String name,
+                          String accountNumber,
+                          String cpf,
+                          float balance){
+
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.cpf = cpf;
+        this.balance = balance;
+
     }
 
     public void withdraw(float money) {
@@ -33,13 +50,13 @@ public class CostumerEntity {
         this.balance += money;
     }
 
-    public long getId() {
+   /* public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -65,14 +82,14 @@ public class CostumerEntity {
         this.balance = balance;
     }
 
-    public String getCreationDate() {
+    /*public String getCreationDate() {
         return creationDate;
     }
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
-
+    */
     public String getCpf() {
         return cpf;
     }
