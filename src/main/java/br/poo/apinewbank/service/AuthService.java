@@ -73,22 +73,33 @@ public class AuthService {
         return java.time.LocalDateTime.now().format(formatter);
     }
 
-    public boolean isValidCPF(String CPF) {
-        return CPF.length() == 11 && CPF.matches("[0-9]+");
-
-    }
     public boolean isValidPassword(String password) {
 
-        char teste[] = password.toCharArray();
-
-        for(int i = 0; i < password.length();i++){
-            if(Character.isUpperCase(teste[i])){
-                return true;
+        int vefLetter = 0;
+        int vefSymbol = 0;
+        int vefDigit = 0;
+        if(password.length() < 12){
+            return false;
+        }
+        for(char tester : password.toCharArray()){
+            if(!Character.isLetterOrDigit(tester)){
+                vefSymbol++;
             }
+            if(Character.isUpperCase(tester)){
+                vefLetter++;
+            }
+            if(Character.isDigit(tester)){
+                vefDigit++;
+            }
+
+        }
+        if(vefLetter > 0 && vefSymbol > 0 && vefDigit > 0){
+            return true;
         }
         return false;
     }
-    public int cpfVerificator(String cpf){
+    private boolean cpfVerificator(String cpf){
+
         char[] cpfConv = cpf.toCharArray();
         int vefEquals = 0;
         int contador = 0;
@@ -98,7 +109,7 @@ public class AuthService {
             }
         }
         if(vefEquals == 10){
-            return 0;
+            return false;
         }else {
             int j = 10;
             for (int i = 0; i < 9; i++) {
@@ -109,7 +120,7 @@ public class AuthService {
             }
             int resto1 = (contador * 10) % 11;
             if (resto1 != Character.getNumericValue(cpfConv[9])) {
-                return 0;
+                return false;
             }else {
                 int k = 11;
                 contador = 0;
@@ -121,39 +132,29 @@ public class AuthService {
                 }
                 int resto2 = (contador * 10) % 11;
                 if (resto2 != Character.getNumericValue(cpfConv[10])) {
-                    return 0;
+                    return false;
 
-                } else {
-                    return 1;
                 }
             }
         }
+        if(cpf.length() == 11 && cpf.matches("[0-9]+")){
+            return true;
+        }
+        return false;
     }
     public int signup(UserDTO user) {
 
-        // Regra 1: Validar o nome do usuario: Precisa ter pelo menos duas palavras
-        if (user.getName().trim().equals("") ) {
+        // Explicacao das regras estao na AuthController
+        if (user.getName().trim().equals("") || user.getName().trim().split(" ").length < 2) {
             return 1;
         }
-        if(user.getName().trim().split(" ").length < 2){
+
+        if(!cpfVerificator(user.getCpf())){
+
             return 2;
         }
-
-        // Regra 2: Validar o CPF
-        if (!isValidCPF(user.getCpf().trim())) {
-
+        if(!isValidPassword(user.getPassword())){
             return 3;
-        }
-        if(cpfVerificator(user.getCpf()) != 1){
-            System.out.println("O valor é: " + cpfVerificator(user.getCpf()));
-            return 4;
-        }
-        // Regra 3: Validar a senha: Minimo 14 caracteres
-        if (user.getPassword().length() < 14) {
-            return 5;
-        }
-        if(!isValidPassword(user.getPassword().trim())){
-            return 6;
         }
 
 

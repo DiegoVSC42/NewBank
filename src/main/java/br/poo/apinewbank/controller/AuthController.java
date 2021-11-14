@@ -45,19 +45,19 @@ public class AuthController {
         int result = service.signup(user);
 
         if(result == 1) {
-            return ResponseEntity.badRequest().body("Nome de usuario vazio.");
-        }else if (result == 2) {
-            return ResponseEntity.badRequest().body("Nome de usuario precisa ter duas palavras");
+            return ResponseEntity.badRequest().body("Nome de usuario não pode estar vazio." +
+                    "\nNome de usuário precisa ter duas palavras");
         }
-        else if (result == 3) {
-            return ResponseEntity.badRequest().body("CPF precisa conter 11 digitos sem traços");
-        }
-        else if (result == 4) {
-            return ResponseEntity.badRequest().body("CPF invalido.");
-        }else if (result == 5) {
-            return ResponseEntity.badRequest().body("Senha não pode ser menor que 14 caracteres.");
-        }else if (result == 6) {
-            return ResponseEntity.badRequest().body("Senha precisa conter letra maiuscula.");
+        else if (result == 2) {
+            return ResponseEntity.badRequest().body("CPF inválido" +
+                    "\nCPF precisa conter 11 digitos " +
+                    "\nCPF nao pode conter traços");
+
+        }else if (result == 3) {
+            return ResponseEntity.badRequest().body("Senha não pode ser menor que 14 caracteres." +
+                    "\nPrecisa conter letras maiúsculas" +
+                    "\nPrecisa conter numeros" +
+                    "\nprecisa conter símbolos");
         }
 
         String s = "Conta criada! Seu numero de conta eh " + user.getAccountNumber();
