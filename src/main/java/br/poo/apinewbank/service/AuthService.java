@@ -19,23 +19,18 @@ public class AuthService {
     @Autowired
     private AuthRepository repo;
 
-    // Numero de digitos da conta pode ter até 8 digitos
-    private final int MAX_ACCOUNT_NUMBER = (int)Math.pow(10, 8);
-    Random rand = new Random();
-    CostumerRepository repository = new CostumerRepository();
-
-   /* public String login(UserDTO user){
+    public String login(UserDTO user){
 
         String cpf = user.getCpf();
         String password = user.getPassword();
 
-        for(UserEntity u : Validator.repo.findALL()){
+        for(UserEntity u : repo.findAll()){
             if(u.getPassword().equals(password) && u.getCpf().equals(cpf)) {
                 return u.getToken();
             }
         }
         return null;
-    }*/
+    }
     public int signup(UserDTO user) {
 
 
@@ -65,8 +60,7 @@ public class AuthService {
 
 
         user.setAccountNumber(entity.getAccountNumber());
-        repo.save(entity); //NA VERSAO FINAL DO PROJETO DEVE GRAVAR NO BANCO DE DADOS
-        // DENTRO DA REPOSITORY
+        repo.save(entity);
         return 0;
     }
     public List<UserDTO> getUsers(String name) {

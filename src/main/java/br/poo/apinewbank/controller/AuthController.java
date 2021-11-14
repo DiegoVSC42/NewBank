@@ -16,7 +16,7 @@ public class AuthController {
     private AuthService service;
 
     @PostMapping("/login")
-    /*public ResponseEntity<String> login(@RequestBody UserDTO user) {
+    public ResponseEntity<String> login(@RequestBody UserDTO user) {
         // Use CPF e senha para entrar
         String token = service.login(user);
 
@@ -28,7 +28,7 @@ public class AuthController {
         responseHeader.add("Authorization", token);
 
         return ResponseEntity.ok().headers(responseHeader).build();
-    }*/
+    }
 
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getUsers(@RequestParam(required = false) String name) {
