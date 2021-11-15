@@ -88,6 +88,23 @@ public class AuthService {
         }
         return 0;
     }
+    public int putUsers(long id, UserDTO user) {
+
+        Optional <UserEntity> result = repo.findById(id);
+
+        if (result.isPresent()) {
+            user.setPassword(result.get().getPassword());
+            user.setCpf(result.get().getCpf());
+            user.setAccountNumber(result.get().getAccountNumber());
+            int execute = deleteUsers(user.getId());
+
+
+            return signup(user);
+        }
+
+
+        return 1;
+    }
 
 
 

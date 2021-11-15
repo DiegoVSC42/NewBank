@@ -77,27 +77,4 @@ public class CostumerRepository {
             allAccountNumbers.add(accountNumber);
         }
     }
-    /*public List<UserDTO> get() {
-        //TODO: Consultar no banco de dados os usuario do
-        //      NewBank
-
-    }*/
-
-    public void save(CostumerEntity user) {
-        //TODO: Gravar os dados do novo usuario no banco de dados
-
-    }
-
-    public void update(CostumerEntity computer) {
-        //TODO: 1) RECUPERAR O DADO DO BANCO DE DADOS;
-        //      2) ALTERAR OS DADOS EM MEMORIA;
-        //      3) GRAVAR OS DADOS ALTERADOS NO BANCO DE DADOS.
-    }
-
-    public void delete(long id) {
-        //TODO: REMOVER O REGISTRO DO BANCO DE DADOS BASEADO NO IDENTIFICADOR
-        //      UNICO.
-    }
-
-
 }

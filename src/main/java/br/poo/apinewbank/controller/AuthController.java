@@ -44,9 +44,20 @@ public class AuthController {
 
         int result = service.deleteUsers(id);
         if(result == 0){
-            ResponseEntity.badRequest().body("ID inexistente");
+            return ResponseEntity.badRequest().body("ID inexistente");
         }
         String s = "Usuario deletado com sucesso";
+        return ResponseEntity.ok(s);
+    }
+
+    @PutMapping("/users")
+    public ResponseEntity<String> putUsers(@RequestBody UserDTO user) {
+
+        int result = service.putUsers(user.getId(),user);
+        if(result == 1){
+            return ResponseEntity.badRequest().body("ID inexistente");
+        }
+        String s = "Nome de usuario atualizado com sucesso";
         return ResponseEntity.ok(s);
     }
 

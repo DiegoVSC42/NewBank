@@ -24,6 +24,10 @@ public class UserEntity {
 
     @Column(name = "token", nullable = true)
     private String token;
+
+    public UserEntity(){
+
+    }
     public UserEntity(
                     String name,
                     String accountNumber,
